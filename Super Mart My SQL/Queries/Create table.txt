@@ -1,0 +1,173 @@
+#Create The Database
+create database db_DBMSProjectInventoryManagement;
+
+
+# Show Dabases
+SHOW databases;
+
+# Use Of db_DBMSProjectInventoryManagement Database
+Use db_DBMSProjectInventoryManagement;
+
+# ********************************* Create Tables *********************************
+
+# ***************************************** tblUser Section *****************************************
+
+# User Table
+create table tblUser
+(
+  UserID int primary key auto_increment, #Auto increment
+  Username varchar(150),
+  Userpassword varchar(150),
+  LastLogin varchar(150),
+  ProfileImage blob #I use blob datatype to store image
+);
+
+# Vendor Table
+create table tblVendor
+(
+  VendorID int primary key auto_increment,
+  VendorName varchar(150),
+  Email varchar(150),
+  ContactNo varchar(150),
+  Address varchar(150)
+);
+
+# Employee Table
+create table tblEmployee
+(
+  EmployeeID int primary key auto_increment,
+  JobID int,
+  FOREIGN Key (JobID) references tblJob(JobID),
+  FirstName varchar(150),
+  LastName varchar(150),
+  Email varchar(150),
+  ContactNo varchar(150),
+  CNIC varchar(150),
+  HiredDate varchar(150),
+  Address varchar(150)
+);
+
+# Manager Table
+create table tblManager
+(
+  ManagerID int primary key auto_increment,
+  ManagerName varchar(150),
+  Email varchar(150),
+  ContactNo varchar(150),
+  CNIC varchar(150),
+  HiredDate varchar(150),
+  Salary int,
+  Address varchar(150)
+);
+
+# Job Title Table
+create table tblJob
+(
+  JobID int primary key auto_increment,
+  JobTitle  varchar(150),
+  Salary int
+);
+
+# Brand Table
+  create table tblBrand
+(
+  BrandID int primary key auto_increment,
+  Brand varchar(150),
+  BrandSummary varchar(150),
+  CreatedDate date
+);
+
+# ProductCategory Table
+create table tblProductCategory
+(
+  CategoryID int primary key auto_increment,
+  CatogoryName varchar(150)
+);
+
+# Product Table
+create table tblProduct
+(
+  ProductID int primary key auto_increment,
+  Catogory int,
+  FOREIGN Key (Catogory) references tblProductCategory(categoryID),
+  Brand int,
+  FOREIGN Key (Brand) references tblBrand(BrandID),
+  ProductName varchar(150),
+  SellPrice int,
+  PurchasePrice int
+);
+
+# Customer Table
+create table tblCustomer
+(
+  CustomerID int primary key auto_increment,
+  FirstName varchar(150),
+  LastName varchar(150),
+  Email varchar(150),
+  ContactNo varchar(150),
+  CNIC varchar(150)
+);
+
+# Purchase Table
+create table tblPurchase
+(
+  PurchaseID int primary key auto_increment,
+  VendorID int,
+  FOREIGN Key (VendorID) references tblVendor(VendorID),
+  ProductID int,
+  FOREIGN Key (ProductID) references tblProduct(ProductID),
+  Quantity int,
+  SellPrice int,
+  PurchasePrice int,
+  PurchaseDate date,
+  ShipmentID int,
+  ShipmentTotal int,
+  AmountPaid int
+);
+
+# Sell Table
+create table tblSell
+(
+  SellID int primary key auto_increment,
+  Customer int,
+  FOREIGN Key (Customer) references tblCustomer(CustomerID),
+  ProductID int,
+  FOREIGN Key (ProductID) references tblProduct(ProductID),
+  Quantity int,
+  SellPrice int,
+  PurchasePrice int,
+  SellDate date,
+  AmountPaid int
+);
+
+# Stock Table
+create table tblStock
+(
+  StockID int primary key auto_increment,
+  ProductID int,
+  FOREIGN Key (ProductID) references tblProduct(ProductID),
+  AvaliableQty int
+);
+
+# PaymentType Table
+create table tblPaymentType
+(
+  PaymentID int primary key auto_increment,
+  PaymentType varchar(150)
+);
+
+# Invoice Table
+create table tblInvoice
+(
+  InvoiceID int primary key auto_increment,
+  CustomerID int,
+  FOREIGN Key (CustomerID) references tblCustomer(CustomerID),
+  ProductID int,
+  FOREIGN Key (ProductID) references tblProduct(ProductID),
+  Quantity int,
+  SellPrice int,
+  AmountPaid int,
+  PaymentMethod int,
+  FOREIGN Key (PaymentMethod) references tblPaymentType(PaymentID),
+  InvoiceDate date
+);

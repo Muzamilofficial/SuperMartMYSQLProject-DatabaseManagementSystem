@@ -1,0 +1,20 @@
+# ************************** Insert Quesries **************************
+# ***************************** Insert tblUser Table *****************************
+select * from tblUser;
+insert into tblUser (Username, Userpassword, LastLogin, ProfileImage) values ('Muhammad Ibrahim', 'abc', '1/9/2022',null);
+
+insert into tblUser (Username, Userpassword, LastLogin, Role) values ('Meesam', '123', '7/8/2022', 'Admin'),
+																			 ('Muzamil Khan', '123abc', '7/8/2022', 'Admin'),
+                                                                             ('Shahid', 'xyz', '9/5/2022', 'Employee'),
+                                                                             ('Ahsan', 'ahsan671', '7/8/2022', 'Manager');
+# ************************** Update Quesries **************************
+# ***************************** Update tblUser Table *****************************
+update tblUser set Role = 'Admin' where UserID = 1;
+select * from tblUser;
+update tblUser set Username = 'Shahid Afridi', UserPassword = 'shahid123' where UserID = 4;
+select * from tblUser;
+
+# ************************** Delete Quesries **************************
+# ***************************** Delete tblUser Table *****************************
+delete from tblUser where UserID = 4;
+select * from tblUser;

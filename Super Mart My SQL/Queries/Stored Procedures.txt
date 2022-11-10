@@ -1,0 +1,718 @@
+# ************************** Stored Procedures **************************
+# ***************************** Store Procedure For tblUser Table *****************************
+use db_dbmsprojectinventorymanagement;
+# Stored Procedure For Insert 1.1
+DELIMITER &&  
+CREATE PROCEDURE InsertUserDataFromUserInput 
+(
+  username varchar(150),
+  pass varchar(150),
+  lastlog varchar(150),
+  role varchar(150)
+)  
+BEGIN  
+       insert into tblUser (Username, Userpassword, LastLogin, Role) values (username, pass, lastlog, role);
+END && 
+DELIMITER ;
+
+call InsertUserDataFromUserInput('Areex', 'art12', '12/1/2022', 'Driver');
+select * from tblUser;
+
+# Stored Procedure For Insert 1.2
+DELIMITER &&  
+CREATE PROCEDURE InsertUserData ()  
+BEGIN  
+       insert into tblUser (Username, Userpassword, LastLogin, Role) values ('Huzaifa', 'qw212', '7/8/2022', 'Employee'),
+																			 ('Shayan', 'dosptd', '7/8/2022','Cashier'),
+                                                                             ('Areex', 'msjwdhsf22', '9/5/2022', 'Employee'),
+                                                                             ('Uzair', '0e22ad--23', '7/8/2022','Employee');
+END &&  
+DELIMITER ;
+Call InsertUserData ();
+select * from tblUser;
+SELECT COUNT(UserID) AS Total_Student FROM tblUser;
+
+# Stored Procedure For Update
+DELIMITER &&
+CREATE PROCEDURE UpdateUserData ()  
+BEGIN  
+       update tblUser set Username = 'Ibrahim', UserPassword = 'ibrahim12' where UserID = 1;
+END &&  
+DELIMITER ;
+Call UpdateUserData();
+select * from tblUser;
+
+DELIMITER &&
+CREATE PROCEDURE UpdateUserInputData
+(
+  id int,
+  username varchar(150),
+  pass varchar(150),
+  lastlog varchar(150),
+  role varchar(150)
+)
+BEGIN  
+       update tblUser set Username = username, UserPassword = pass, LastLogin = lastlog, Role = role where UserID = id;
+END &&  
+DELIMITER ;
+Call UpdateUserInputData(1, 'Ibrahim Khan', 'abc', '2/9/2022', 'Admin');
+select * from tblUser;
+# Stored Procedure For Delete
+DELIMITER &&
+CREATE PROCEDURE DeleteUserInputData
+(
+  id int,
+  username varchar(150)
+)
+BEGIN  
+       delete from tblUser where UserID = id and Username = username;
+END &&  
+DELIMITER ;
+call DeleteUserInputData(1, 'Areex');
+select * from tblUser;
+
+# ***************************** Store Procedure For tblCustomer Table *****************************
+DELIMITER &&  
+CREATE PROCEDURE InsertCustomerData 
+(
+  fname varchar(150),
+  lname varchar(150),
+  email varchar(150),
+  conno varchar(150),
+  cnic varchar(150),
+  image blob
+)  
+BEGIN  
+       insert into tblcustomer (FirstName, LastName, Email, ContactNo, CNIC, Image) 
+							   values (fname, lname, email, conno, cnic, image);
+END && 
+DELIMITER ;
+call InsertCustomerData('Ibrahim', 'Khan', 'ibrahim12@gmail.com', '1212', '121-2-2-11', null);
+call InsertCustomerData('Meesam', 'Khan', 'meesam@gmail.com', '1212', '121-2-2-11', null);
+select * from tblCustomer;
+
+# Stored Procedure For Update
+DELIMITER &&
+CREATE PROCEDURE UpdateCustomerData
+(
+  id int,
+  fname varchar(150),
+  LastName varchar(150),
+  email varchar(150),
+  conno varchar(150),
+  cnic varchar(150),
+  image blob
+)  
+BEGIN  
+       update tblCustomer set FirstName = fname, LastName = LastName, Email = email, ContactNo = conno, CNIC = cnic, Image = image where CustomerID = id;
+END &&
+DELIMITER ;
+
+call UpdateCustomerData(2, 'Meesam', 'Zardari', 'meesam122@gmail.com', '9011', '121-2-2-11', null);
+select * from tblCustomer;
+
+# Stored Procedure For Delete
+DELIMITER &&
+CREATE PROCEDURE DeleteCustomerData
+(
+  id int,
+  cnic varchar(150)
+)
+BEGIN  
+       delete from tblCustomer where CustomerID = id and CNIC = cnic;
+END &&  
+DELIMITER ;
+call DeleteCustomerData(1, '9011');
+select * from tblCustomer;
+
+# ***************************** Store Procedure For tblBrand Table *****************************
+DELIMITER &&  
+CREATE PROCEDURE InsertBrandData 
+(
+  brand varchar(150),
+  Summary varchar(150),
+  CreatedDate date
+)  
+BEGIN  
+       insert into tblBrand (Brand, Summary, CreatedDate) 
+							   values (brand, Summary, CreatedDate);
+END && 
+DELIMITER ;
+call InsertBrandData('Apple', 'NonPTA', '2022-10-03');
+call InsertBrandData('Samsung', 'PTA', '2022-10-03');
+call InsertBrandData('Infinix', 'PTA', '2022-10-03');
+call InsertBrandData('Realme', 'NonPTA', '2022-10-03');
+call InsertBrandData('Hauwei', 'NonPTA', '2022-10-03');
+select * from tblBrand;
+
+# Stored Procedure For Update
+DELIMITER &&
+CREATE PROCEDURE UpdateBrandData
+(
+  id int,
+  brand varchar(150),
+  Summary varchar(150),
+  CreatedDate date
+)  
+BEGIN  
+       update tblBrand set Brand = brand, Summary = Summary, CreatedDate = CreatedDate where BrandID = id;
+END &&
+DELIMITER ;
+call UpdateBrandData(4, 'Redme', 'NonPTA', '2022-10-01');
+select * from tblBrand;
+
+# For delete data
+DELIMITER &&
+CREATE PROCEDURE DeleteBrandData
+(
+  id int,
+  Bname varchar(150)
+)
+BEGIN  
+       delete from tblBrand where BrandID = id and Brand = Bname;
+END &&  
+DELIMITER ;
+call DeleteBrandData(5, 'Hauwei');
+select * from tblBrand;
+
+
+# ***************************** Store Procedure For tblJob Table *****************************
+# for insert data
+DELIMITER &&  
+CREATE PROCEDURE InsertJobData 
+(
+  tilte varchar(150),
+  salary int
+)  
+BEGIN  
+       insert into tblJob (JobTitle, Salary) 
+							   values (tilte, salary);
+END && 
+DELIMITER ;
+call InsertJobData('Cashier', '2000');
+call InsertJobData('Driver', '4000');
+select * from tbljob;
+
+# Update Data
+DELIMITER &&
+CREATE PROCEDURE UpdateJobData
+(
+  id int,
+  title varchar(150),
+  salary int
+)  
+BEGIN  
+       update tblJob set JobTitle = title, Salary = salary where JobID = id;
+END &&
+DELIMITER ;
+call UpdateJobData(2, 'Driver', 40500);
+select * from tblJob;
+
+# Stored Procedure For Delete
+DELIMITER &&
+CREATE PROCEDURE DeleteJobData
+(
+  id int,
+  job varchar(150)
+)
+BEGIN  
+       delete from tbljob where JobID = id and JobTitle = job;
+END &&  
+DELIMITER ;
+call DeleteJobData(2, 'driver');
+select * from tblJob;
+
+# ***************************** Store Procedure For tblEmployee Table *****************************
+# For Insert
+DELIMITER &&  
+CREATE PROCEDURE InsertEmployeeData 
+(
+  job int,
+  fname varchar(150),
+  lname varchar(150),
+  email varchar(150),
+  conno varchar(150),
+  cnic varchar(150),
+  hdate date,
+  address varchar(150),
+  image blob
+)  
+BEGIN  
+       insert into tblEmployee(JobID, FirstName, LastName,Email,ContactNo,CNIC,HiredDate,Address,Image) 
+							   values (job, fname, lname,email,conno,cnic,hdate,address,image);
+END && 
+DELIMITER ;
+call InsertEmployeeData(1,'Sarfaraz', 'Ahmed','sarfaraz78@gmail.com', '+92 222121221', '343434',  '2022-10-03', 'Karachi', null);
+call InsertEmployeeData(3,'Ahmed', 'Khan','ahsan@gmail.com', '+92 2112121', '1212121', '2022-10-03', 'Karachi', null);
+call InsertEmployeeData(1,'Ahsan', 'Saleem','dark@gmail.com', '+92 3323232', '5342', '2022-10-03', 'Karachi', null);
+call InsertEmployeeData(1,'Shayan', 'Ahmed','harray67@gmail.com', '+92 656523', '14422', '2022-10-03', 'Karachi', null);
+call InsertEmployeeData(3,'Areex', 'Siddique','areex1211@gmail.com', '+92 43231232', '9076544', '2022-10-03', 'Karachi', null);
+select * from tblEmployee;
+
+# Update Data
+DELIMITER &&
+CREATE PROCEDURE UpdateEmployeeData
+(
+  id int,
+  job int,
+  fname varchar(150),
+  lname varchar(150),
+  email varchar(150),
+  conno varchar(150),
+  cnic varchar(150),
+  hdate date,
+  address varchar(150),
+  image blob
+  )  
+BEGIN  
+       update tblEmployee set jobID = job, FirstName = fname, LastName=lname,Email=email,ContactNo=conno,HiredDate=Hdate,Address=Address,image=Image where EmployeeID = id;
+END &&
+DELIMITER ;
+call UpdateEmployeeData(1, 3,'Sarfaraz', 'Ahmed','sarfaraz78@gmail.com', '+92 222121221', '343434',  '2022-10-03', 'Karachi', null);
+select * from tblEmployee;
+
+# For Delete
+# Stored Procedure For Delete
+DELIMITER &&
+CREATE PROCEDURE DeleteEmployeeData
+(
+  id int,
+  cnic varchar(150)
+)
+BEGIN  
+       delete from tblEmployee where EmployeeID = id and CNIC = cnic;
+END &&  
+DELIMITER ;
+call DeleteEmployeeData(7, 'CNIC');
+select * from tblEmployee;
+
+# ***************************** Store Procedure For tblManager Table *****************************
+
+# for insert data
+DELIMITER &&  
+CREATE PROCEDURE InsertManagerData 
+(
+  Mname varchar(150),
+  email varchar(150),
+  conno varchar(150),
+  cnic varchar(150),
+  Hdate date,
+  salary int,
+  address varchar(150)
+)  
+BEGIN  
+       insert into tblManager (ManagerName, Email, ContactNo, CNIC, HiredDate, Salary, Address) 
+							   values (MName, email,conno, cnic, Hdate, salary, address);
+END && 
+DELIMITER ;
+call InsertManagerData('Ibrahim Khan', 'ibrahim12@hotmail.com','+92-1221212', '12-222-22', '2000-3-3',340000, 'Karachi');
+call InsertManagerData('Muzamil Khan', 'mk8812@gmail.com','+92-888666', '12-888-999', '2000-3-3',340000, 'Karachi');
+select * from tblManager;
+
+# for update data
+# Update Data
+DELIMITER &&
+CREATE PROCEDURE UpdateManagerData
+(
+  id int,
+  Mname varchar(150),
+  email varchar(150),
+  conno varchar(150),
+  cnic varchar(150),
+  Hdate date,
+  salary int,
+  address varchar(150)
+)  
+BEGIN  
+       update tblManager set ManagerName = Mname, Email = email,ContactNo=conno,CNIC=cnic,HiredDate=Hdate,Salary=salary,Address=address where ManagerID = id;
+END &&
+DELIMITER ;
+call UpdateManagerData(1, 'Ibrahim Khan', 'ibrahim12@hotmail.com','+92-1221212', '12-222-22', '2000-3-3',700000, 'Karachi');
+select * from tblmanager;
+
+# For Delete
+# Stored Procedure For Delete
+DELIMITER &&
+CREATE PROCEDURE DeleteManagerData
+(
+  id int,
+  Mname varchar(150)
+)
+BEGIN  
+       delete from tblManager where ManagerID = id and ManagerName = Mname;
+END &&  
+DELIMITER ;
+call DeleteManagerData(2, 'Muzamil Khan');
+select * from tblManager;
+
+# ***************************** Store Procedure For tblPaymentType Table *****************************
+# for insert data
+DELIMITER &&  
+CREATE PROCEDURE InsertPaymentData 
+(
+  payment varchar(150)
+)  
+BEGIN  
+       insert into tblPaymentType (PaymentType) 
+							   values (payment);
+END && 
+DELIMITER ;
+call InsertPaymentData('Cash');
+call InsertPaymentData('Sheque');
+call InsertPaymentData('Online');
+call InsertPaymentData('Other');
+select * from tblPaymentType;
+
+# For update data
+# Update Data
+DELIMITER &&
+CREATE PROCEDURE UpdatePaymentData
+(
+  id int,
+  payment varchar(150)
+)  
+BEGIN  
+       update tblPaymentType set PaymentType = payment where PaymentID = id;
+END &&
+DELIMITER ;
+call UpdatePaymentData(4, 'Other Option');
+select * from tblPaymentType;
+
+# For Delete data
+DELIMITER &&
+CREATE PROCEDURE DeletePaymentData
+(
+  id int,
+  payment varchar(150)
+)
+BEGIN  
+       delete from tblPaymentType where PaymentID = id and PaymentType = payment;
+END &&  
+DELIMITER ;
+call DeletePaymentData(4, 'Other Option');
+select * from tblPaymentType;
+
+# ***************************** Store Procedure For tblProductCategory Table *****************************
+
+# for insert data
+DELIMITER &&  
+CREATE PROCEDURE InsertProductCategoryData 
+(
+  Pname varchar(150)
+)  
+BEGIN  
+       insert into tblProductCategory (CatogoryName) 
+							   values (Pname);
+END && 
+DELIMITER ;
+call InsertProductCategoryData('Smart Phone');
+call InsertProductCategoryData('Biscuits');
+call InsertProductCategoryData('Masala');
+call InsertProductCategoryData('Grocery');
+call InsertProductCategoryData('Other');
+select * from tblProductCategory;
+
+# For Update data
+# Update Data
+DELIMITER &&
+CREATE PROCEDURE UpdateProductCategoryData
+(
+  id int,
+  Pname varchar(150)
+)  
+BEGIN  
+       update tblProductCategory set CatogoryName = Pname where CategoryID = id;
+END &&
+DELIMITER ;
+call UpdateProductCategoryData(5, 'Other Inventory');
+select * from tblProductCategory;
+
+# For delete data
+DELIMITER &&
+CREATE PROCEDURE DeleteProductCategoryData
+(
+  id int,
+  Pname varchar(150)
+)
+BEGIN  
+       delete from tblProductCategory where CategoryID = id and CatogoryName = Pname;
+END &&  
+DELIMITER ;
+call DeleteProductCategoryData(5, 'Other Inventory');
+select * from tblProductCategory;
+
+# ***************************** Store Procedure For tblVendor Table *****************************
+
+# for insert data
+DELIMITER &&  
+CREATE PROCEDURE InsertVendorData 
+(
+  vname varchar(150),
+  email varchar(150),
+  conno varchar(150),
+  address varchar(150)
+)  
+BEGIN  
+       insert into tblVendor (VendorName, Email, ContactNo,Address) 
+							   values (vname, email, conno, address);
+END && 
+DELIMITER ;
+call InsertVendorData('Abdul Rehman', 'rehman12@gmail.com', '+92-2121212', 'Karachi');
+call InsertVendorData('Fazal Waleed', 'fazal@gmail.com', '+92-55555', 'Karachi');
+call InsertVendorData('Shahid Yousuf', 'dark121@gmail.com', '+92-556452323', 'Karachi');
+call InsertVendorData('Abdullah', 'ab22@gmail.com', '+92-2346688345', 'Karachi');
+select * from tblVendor;
+
+# For update data
+DELIMITER &&
+CREATE PROCEDURE UpdateVendorData
+(
+  id int,
+  vname varchar(150),
+  email varchar(150),
+  conno varchar(150),
+  address varchar(150)
+)  
+BEGIN  
+       update tblVendor set VendorName = vname, Email = email, ContactNo = conno, Address = address where VendorID = id;
+END &&
+DELIMITER ;
+call UpdateVendorData(4, 'Abdullah', 'ab22@gmail.com', '+92-2346688345', 'Peshawer');
+select * from tblVendor;
+
+# for delete data
+DELIMITER &&
+CREATE PROCEDURE DeleteVendorData
+(
+  id int,
+  vname varchar(150)
+)
+BEGIN  
+       delete from tblVendor where VendorID = id and VendorName = vname;
+END &&  
+DELIMITER ;
+call DeleteVendorData(4, 'Abdullah');
+select * from tblVendor;
+
+# ***************************** Store Procedure For tblProduct Table *****************************
+
+# for insert data
+DELIMITER &&  
+CREATE PROCEDURE InsertProductData 
+(
+  cat int,
+  brand int,
+  Pname varchar(150),
+  sellprc int,
+  purpric int
+)  
+BEGIN  
+       insert into tblProduct (Catogory, Brand, ProductName, SellPrice, PurchasePrice) 
+							   values (cat, brand, Pname, sellprc, purpric);
+END && 
+DELIMITER ;
+call InsertProductData(1, 1, 'Iphone 12', 200000, 250000);
+call InsertProductData(1, 1, 'Iphone 13', 300000, 350000);
+call InsertProductData(1, 1, 'Iphone 14', 400000, 450000);
+select * from tblproductCategory;
+select * from tblBrand;
+select * from tblProduct;
+
+# for update data
+DELIMITER &&
+CREATE PROCEDURE UpdateProductData
+(
+  id int,
+  cat int,
+  brand int,
+  Pname varchar(150),
+  sellprc int,
+  purpric int
+)  
+BEGIN  
+       update tblProduct set Catogory = cat, Brand = brand, ProductName=Pname, SellPrice=sellprc, PurchasePrice= purpric where ProductID = id;
+END &&
+DELIMITER ;
+
+call UpdateProductData(1, 1, 1, 'Iphone 12', 250000, 280000);
+select * from tblProduct;
+
+# for delete data
+DELIMITER &&
+CREATE PROCEDURE DeleteProductData
+(
+  id int,
+  Pname varchar(150)
+)
+BEGIN  
+       delete from tblProduct where ProductID = id and ProductName = Pname;
+END &&  
+DELIMITER ;
+call DeleteProductData(1, 'Iphone 12');
+select * from tblProduct;
+
+# ***************************** Store Procedure For tblPurchase Table *****************************
+
+# for insert data
+DELIMITER &&  
+CREATE PROCEDURE InsertPurchaseData 
+(
+  vid int,
+  pid int,
+  qty int,
+  sellprice int,
+  purprice int,
+  pdate date,
+  sid int,
+  stotal int,
+  amtpaid int
+)  
+BEGIN  
+       insert into tblPurchase (VendorID,ProductID,Quantity,SellPrice,PurchasePrice, PurchaseDate, ShipmentID, ShipmentTotal, AmountPaid) 
+							   values (vid,pid,qty,sellprice,purprice, pdate,sid,stotal,amtpaid);
+END && 
+DELIMITER ;
+call InsertPurchaseData(1,2,200,10000,5000, '2020-5-5',122,4000,40000);
+call InsertPurchaseData(1,2,400,9000,1000, '2020-5-5',122,8000,90000);
+call InsertPurchaseData(1,2,800,8000,1000, '2020-5-5',122,4000,40000);
+
+select * from tblVendor;
+select * from tblProduct;
+select * from tblPurchase;
+
+# Update Data
+DELIMITER &&
+CREATE PROCEDURE UpdatePurchaseData
+(
+  id int,
+  vid int,
+  pid int,
+  qty int,
+  sellprice int,
+  purprice int,
+  pdate date,
+  sid int,
+  stotal int,
+  amtpaid int
+)  
+BEGIN  
+       update tblPurchase set VendorID = vid, ProductID = pid,Quantity=qty,SellPrice=sellprice,PurchasePrice=purprice,PurchaseDate=pdate,
+       ShipmentID=sid,ShipmentTotal=stotal,AmountPaid=amtpaid where PurchaseID = id;
+END &&
+DELIMITER ;
+call UpdatePurchaseData(1, 1,2,30,100,50, '2020-5-5',122,40,40);
+select * from tblPurchase;
+
+# for delete data
+DELIMITER &&
+CREATE PROCEDURE DeletePurchaseData
+(
+  id int
+)
+BEGIN  
+       delete from tblPurchase where PurchaseID = id;
+END &&  
+DELIMITER ;
+call DeletePurchaseData(2);
+select * from tblPurchase;
+
+# ***************************** Store Procedure For tblSell Table *****************************
+
+# for insert data
+DELIMITER &&  
+CREATE PROCEDURE InsertSellData 
+(
+  cid int,
+  pid int,
+  qty int,
+  sellpr int,
+  purpr int,
+  sdate date,
+  apaid int
+)  
+BEGIN  
+       insert into tblSell (Customer, ProductID, Quantity, SellPrice, PurchasePrice, SellDate, AmountPaid) 
+							   values (cid, pid,qty,sellpr,purpr,sdate,apaid);
+END && 
+DELIMITER ;
+call InsertSellData(3,2,12,1200,1000,'2022-2-2',1200);
+call InsertSellData(4,2,1,120,100,'2022-2-2',120);
+call InsertSellData(3,2,5,1250,100,'2022-2-2',1250);
+select * from tblCustomer;
+select * from tblSell;
+
+# For update data
+DELIMITER &&
+CREATE PROCEDURE UpdateSellData
+(
+  id int,
+  cid int,
+  pid int,
+  qty int,
+  sellpr int,
+  purpr int,
+  sdate date,
+  apaid int
+)  
+BEGIN  
+       update tblSell set Customer = cid, ProductID = pid,Quantity=qty,SellPrice=sellpr,PurchasePrice=purpr,SellDate=sdate,
+       AmountPaid=apaid where SellID = id;
+END &&
+DELIMITER ;
+call UpdateSellData(2,3,2,120,12000,10000,'2022-2-2',12000);
+select * from tblSell;
+
+# for delete data
+DELIMITER &&
+CREATE PROCEDURE DeleteSellData
+(
+  id int
+)
+BEGIN  
+       delete from tblSell where SellID = id;
+END && 
+DELIMITER ;
+
+call DeleteSellData(2);
+select * from tblSell;
+
+
+# ***************************** Store Procedure For tblInvoice Table *****************************
+
+# for insert data
+DELIMITER &&
+CREATE PROCEDURE InsertInvoiceData 
+(
+  cid int,
+  pid int,
+  qty int,
+  sellpr int,
+  apaid int,
+  payid int,
+  sdate date
+)  
+BEGIN  
+       insert into tblInvoice (CustomerID, ProductID, Quantity, SellPrice,AmountPaid, PaymentMethod, InvoiceDate) 
+							   values (cid, pid,qty,sellpr, apaid,payid,sdate);
+END && 
+DELIMITER ;
+call InsertInvoiceData(3,2,23,200,200,1, '2022-2-2');
+call InsertInvoiceData(4,2,30,2000,2000,1, '2022-2-2');
+select * from tblCustomer;
+select * from tblPaymentType;
+select * from tblInvoice;
+
+# For delete data
+DELIMITER &&
+CREATE PROCEDURE DeleteInvoiceData
+(
+  id int
+)
+BEGIN  
+       delete from tblInvoice where InvoiceID = id;
+END && 
+DELIMITER ;
+
+call DeleteInvoiceData(2);
+select * from tblInvoice;
+

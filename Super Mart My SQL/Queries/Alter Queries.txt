@@ -1,0 +1,28 @@
+# ************************** Alter Quesries **************************
+
+# ***************************** Alter tblUser Table *****************************
+# Alter tblUser Database to add a new column
+ALTER table tblUser add UserStatus varchar(150);
+# Alter To Change The Name
+Alter table tblUser Rename Column UserStatus tO Status;
+# Drop The Database Column
+Alter table tblUser drop column Status;
+Alter table tblUser add Role varchar(150);
+Alter table tbluser drop column ProfileImage;
+
+# ***************************** Alter tblCustomer Table *****************************
+# Alter tblUser Database to add a new column
+ALTER table tblCustomer add CustomerImage blob;
+# Alter To Change The Name
+Alter table tblCustomer Rename Column CustomerImage tO Image;
+select * from tblCustomer;
+
+# ***************************** Alter tblBrand Table *****************************
+# Alter To Change The Name
+Alter table tblBrand Rename Column BrandSummary tO Summary;
+select * from tblBrand;
+
+# ***************************** Alter tblEmployee Table *****************************
+# Alter tblUser Database to add a new column
+ALTER table tblEmployee add Image blob;
+select * from tblEmployee;

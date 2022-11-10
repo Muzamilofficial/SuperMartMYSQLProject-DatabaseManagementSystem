@@ -1,0 +1,298 @@
+#Create The Database
+create database db_DBMSProjectInventoryManagement;
+
+
+# Show Dabases
+SHOW databases;
+
+# Use Of db_DBMSProjectInventoryManagement Database
+Use db_DBMSProjectInventoryManagement;
+
+# ********************************* Create Tables *********************************
+
+# ***************************************** tblUser Section *****************************************
+
+# User Table
+create table tblUser
+(
+  UserID int primary key auto_increment, #Auto increment
+  Username varchar(150),
+  Userpassword varchar(150),
+  LastLogin varchar(150),
+  ProfileImage blob #I use blob datatype to store image
+);
+
+# Vendor Table
+create table tblVendor
+(
+  VendorID int primary key auto_increment,
+  VendorName varchar(150),
+  Email varchar(150),
+  ContactNo varchar(150),
+  Address varchar(150)
+);
+
+# Employee Table
+create table tblEmployee
+(
+  EmployeeID int primary key auto_increment,
+  JobID int,
+  FOREIGN Key (JobID) references tblJob(JobID),
+  FirstName varchar(150),
+  LastName varchar(150),
+  Email varchar(150),
+  ContactNo varchar(150),
+  CNIC varchar(150),
+  HiredDate varchar(150),
+  Address varchar(150)
+);
+
+# Manager Table
+create table tblManager
+(
+  ManagerID int primary key auto_increment,
+  ManagerName varchar(150),
+  Email varchar(150),
+  ContactNo varchar(150),
+  CNIC varchar(150),
+  HiredDate varchar(150),
+  Salary int,
+  Address varchar(150)
+);
+
+# Job Title Table
+create table tblJob
+(
+  JobID int primary key auto_increment,
+  JobTitle  varchar(150),
+  Salary int
+);
+
+# Brand Table
+  create table tblBrand
+(
+  BrandID int primary key auto_increment,
+  Brand varchar(150),
+  BrandSummary varchar(150),
+  CreatedDate date
+);
+
+# ProductCategory Table
+create table tblProductCategory
+(
+  CategoryID int primary key auto_increment,
+  CatogoryName varchar(150)
+);
+
+# Product Table
+create table tblProduct
+(
+  ProductID int primary key auto_increment,
+  Catogory int,
+  FOREIGN Key (Catogory) references tblProductCategory(categoryID),
+  Brand int,
+  FOREIGN Key (Brand) references tblBrand(BrandID),
+  ProductName varchar(150),
+  SellPrice int,
+  PurchasePrice int
+);
+
+# Customer Table
+create table tblCustomer
+(
+  CustomerID int primary key auto_increment,
+  FirstName varchar(150),
+  LastName varchar(150),
+  Email varchar(150),
+  ContactNo varchar(150),
+  CNIC varchar(150)
+);
+
+# Purchase Table
+create table tblPurchase
+(
+  PurchaseID int primary key auto_increment,
+  VendorID int,
+  FOREIGN Key (VendorID) references tblVendor(VendorID),
+  PurchaseDate date,
+  ShipmentID int,
+  ShipmentTotal int,
+  AmountPaid int
+);
+
+# PurchaseDetails Table
+create table tblPurchaseDetails
+(
+  PurchaseDetailID int primary key auto_increment,
+  PurchaseID int,
+  FOREIGN Key (PurchaseID) references tblPurchase(PurchaseID),
+  ProductID int,
+  FOREIGN Key (ProductID) references tblProduct(ProductID),
+  Quantity int,
+  SellPrice int,
+  PurchasePrice int
+);
+
+# Sell Table
+create table tblSell
+(
+  SellID int primary key auto_increment,
+  Customer int,
+  FOREIGN Key (Customer) references tblCustomer(CustomerID),
+  SellDate date,
+  AmountPaid int
+);
+
+# SellDetails Table
+create table tblSellDetails
+(
+  SellDetailID int primary key auto_increment,
+  SellID int,
+  FOREIGN Key (SellID) references tblSell(SellID),
+  ProductID int,
+  FOREIGN Key (ProductID) references tblProduct(ProductID),
+  Quantity int,
+  SellPrice int,
+  PurchasePrice int
+);
+
+# Stock Table
+create table tblStock
+(
+  StockID int primary key auto_increment,
+  ProductID int,
+  FOREIGN Key (ProductID) references tblProduct(ProductID),
+  AvaliableQty int
+);
+
+# PaymentType Table
+create table tblPaymentType
+(
+  PaymentID int primary key auto_increment,
+  PaymentType varchar(150)
+);
+
+# Invoice Table
+create table tblInvoice
+(
+  InvoiceID int primary key auto_increment,
+  CustomerID int,
+  FOREIGN Key (CustomerID) references tblCustomer(CustomerID),
+  ProductID int,
+  FOREIGN Key (ProductID) references tblProduct(ProductID),
+  Quantity int,
+  SellPrice int,
+  AmountPaid int,
+  PaymentMethod int,
+  FOREIGN Key (PaymentMethod) references tblPaymentType(PaymentID),
+  InvoiceDate date
+);
+
+# 
+
+# ************************** Alter Quesries **************************
+
+# ***************************** Alter tblUser Table *****************************
+# Alter tblUser Database to add a new column
+ALTER table tblUser add UserStatus varchar(150);
+# Alter To Change The Name
+Alter table tblUser Rename Column UserStatus tO Status;
+# Drop The Database Column
+Alter table tblUser drop column Status;
+Alter table tblUser add Role varchar(150);
+Alter table tbluser drop column ProfileImage;
+
+# ************************** Insert Quesries **************************
+# ***************************** Insert tblUser Table *****************************
+select * from tblUser;
+insert into tblUser (Username, Userpassword, LastLogin, ProfileImage) values ('Muhammad Ibrahim', 'abc', '1/9/2022',null);
+
+insert into tblUser (Username, Userpassword, LastLogin, ProfileImage, Role) values ('Meesam', '123', '7/8/2022',null, 'Admin'),
+																			 ('Muzamil Khan', '123abc', '7/8/2022',null, 'Admin'),
+                                                                             ('Shahid', 'xyz', '9/5/2022',null, 'Employee'),
+                                                                             ('Ahsan', 'ahsan671', '7/8/2022',null, 'Cashier');
+# ************************** Update Quesries **************************
+# ***************************** Update tblUser Table *****************************
+update tblUser set Role = 'Admin' where UserID = 1;
+select * from tblUser;
+update tblUser set Username = 'Shahid Afridi', UserPassword = 'shahid123' where UserID = 4;
+select * from tblUser;
+
+# ************************** Delete Quesries **************************
+# ***************************** Delete tblUser Table *****************************
+delete from tblUser where UserID = 5;
+select * from tblUser;
+
+# ************************** Stored Procedures **************************
+# ***************************** Store Procedure For tblUser Table *****************************
+# Stored Procedure For Insert 1.1
+DELIMITER &&  
+CREATE PROCEDURE InsertUserDataFromUserInput 
+(
+  username varchar(150),
+  pass varchar(150),
+  lastlog varchar(150),
+  role varchar(150)
+)  
+BEGIN  
+       insert into tblUser (Username, Userpassword, LastLogin, Role) values (username, pass, lastlog, role);
+END && 
+DELIMITER ;
+
+call InsertUserDataFromUserInput('Areex', 'art12', '12/1/2022', 'Driver');
+select * from tblUser;
+
+# Stored Procedure For Insert 1.2
+DELIMITER &&  
+CREATE PROCEDURE InsertUserData ()  
+BEGIN  
+       insert into tblUser (Username, Userpassword, LastLogin, Role) values ('Huzaifa', 'qw212', '7/8/2022', 'Employee'),
+																			 ('Shayan', 'dosptd', '7/8/2022','Cashier'),
+                                                                             ('Areex', 'msjwdhsf22', '9/5/2022', 'Employee'),
+                                                                             ('Uzair', '0e22ad--23', '7/8/2022','Employee');
+END &&  
+DELIMITER ;
+Call InsertUserData ();
+select * from tblUser;
+SELECT COUNT(UserID) AS Total_Student FROM tblUser;
+
+# Stored Procedure For Update
+DELIMITER &&
+CREATE PROCEDURE UpdateUserData ()  
+BEGIN  
+       update tblUser set Username = 'Ibrahim', UserPassword = 'ibrahim12' where UserID = 1;
+END &&  
+DELIMITER ;
+Call UpdateUserData();
+select * from tblUser;
+
+DELIMITER &&
+CREATE PROCEDURE UpdateUserInputData
+(
+  id int,
+  username varchar(150),
+  pass varchar(150),
+  lastlog varchar(150),
+  role varchar(150)
+)
+BEGIN  
+       update tblUser set Username = username, UserPassword = pass, LastLogin = lastlog, Role = role where UserID = id;
+END &&  
+DELIMITER ;
+Call UpdateUserInputData(1, 'Ibrahim Khan', 'abc', '2/9/2022', 'Admin');
+select * from tblUser;
+# Stored Procedure For Delete
+DELIMITER &&
+CREATE PROCEDURE DeleteUserInputData
+(
+  id int,
+  username varchar(150)
+)
+BEGIN  
+       delete from tblUser where UserID = id and Username = username;
+END &&  
+DELIMITER ;
+call DeleteUserInputData(1, 'Areex');
+select * from tblUser;
+
+
